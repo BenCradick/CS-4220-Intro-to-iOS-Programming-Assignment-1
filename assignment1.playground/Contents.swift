@@ -132,9 +132,66 @@ let vertices: [(x: Double, y: Double)] = [
 
 // CODE HERE
 
+enum Shape {
+    case triangle
+    case rectangle
+    case pentagon
+    
+    func hasCorrectNumberOfVertices(vertices: [(x: Double, y: Double)]) -> Bool{
+        let numVertices = vertices.capacity
+        switch self{
+            case .triangle:
+                if numVertices == 3 {
+                    return true
+            }
+                else{
+                    return false
+            }
+            case .rectangle:
+                if numVertices == 4 {
+                    return true
+            }
+                else{
+                    return false
+            }
+            case.pentagon:
+                if numVertices == 5 {
+                    return true
+            }
+                else{
+                    return false
+            }
+        }
+    }
 
-//let triangle = Shape.triangle
-//let correct: Bool = triangle.hasCorrectNumberOfVertices(vertices)
-//let perimeter: Double? = triangle.calculatePerimeterLength(from: vertices)
+    func calculatePerimeterLength(from :[(x: Double, y: Double)])->Double?{
+        var perimeter: Double = 0
+        guard !hasCorrectNumberOfVertices(vertices: from)else {
+            //iterate through each vertice, calculate distance to next vertice
+            for head in 0..<from.count{
+                let tail = (head + 1)%from.count
+                    /*
+                     * Distance formula is  Distance =((x2−x1)^2+(y2−y1)^2)^1/2
+                     * Perimeter is the sum of the distances between sequential vertices, with the last vertice pointing to the first vertice
+                     */
+                    perimeter += (pow(from[tail].x - from[head].x, 2) + pow(from[tail].y - from[head].y, 2)).squareRoot()
+                
+            }
+            return perimeter
+        }
+        return nil
+    }
+}
+let vertices: [(x: Double, y: Double)] = [
+    (x: 5.0, y: 5.0),
+    (x: 1.0, y: 3.0),
+    (x: 3.0, y: -1)
+]
 
+// CODE HERE
+
+
+let triangle = Shape.triangle
+let correct: Bool = triangle.hasCorrectNumberOfVertices(vertices: vertices)
+let perimeter: Double? = triangle.calculatePerimeterLength(from: vertices)
 
